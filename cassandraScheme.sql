@@ -9,6 +9,14 @@ CREATE TABLE messages(
 );
 CREATE TABLE httpd(
 	id_httpd timeuuid PRIMARY KEY,
+	ip inet,
+	userid varchar,
+	not_available varchar,
 	datetime timestamp,
+	method varchar,
+	resource varchar,
+	protocol varchar,
+	status_code varchar,
+	size_object varchar,
 	message text
 );
