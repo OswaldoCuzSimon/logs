@@ -1,0 +1,32 @@
+# Logs
+
+## Synopsis
+Aplicacion que envia el contenido de los logs: var/log/messages y var/log/httpd/access_log
+a un topic de kafka mediante flume, el topic es consumido por un consumer de python y enviado
+a Cassandra
+
+## Despliegue
+
+### 1 Crear un entorno virtual
+```virtualenv -p /usr/bin/python3.4 env ```
+
+### 2 Activar el entorno
+```source env/bin/activate```
+
+### 3 Instalar las librerias
+```pip install -r requirements.txt```
+
+### 4 Correr el contenedor [spotify/kafka](https://hub.docker.com/r/spotify/kafka/)
+```docker run -p 2181:2181 -p 9092:9092 --env ADVERTISED_HOST=localhost --env ADVERTISED_PORT=9092 spotify/kafka```
+
+### 5 Correr el contenedor [cassandra](https://hub.docker.com/_/cassandra/)
+```docker run --name cassandra1 -d  -p 9042:9042 cassandra```
+
+### 6 Correr Flume
+```bash
+cd <flume-path>
+export LOG_DIR=<path-repositorie>/logs
+sudo bin/flume-ng agent --name source_agent --conf ./conf/ --conf-file $LOG_DIR/flume-log-kafka.conf -Dflume.root.logger=DEBUG,console
+```
+### 6 Ejecutar el [consumerLogs.py](https://github.com/OswaldoCuzSimon/logs/blob/master/consumerLogs.py)
+```python consumerLogs.py```
