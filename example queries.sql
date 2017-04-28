@@ -6,7 +6,7 @@ WHERE id_httpd > maxTimeuuid('2013-01-01 00:05+0000')
 AND id_httpd < minTimeuuid('2013-01-01 00:05+0000')
 
 
-SELECT DateOf(id_httpd),datetime from httpd;
+SELECT DateOf(id_httpd) as ins_date,datetime from httpd;
 
 SELECT * FROM httpd WHERE status_code ='403' allow filtering;
 
@@ -20,17 +20,9 @@ AND datetime < '2017-04-27 13:00:0' allow filtering;
 
 
 
-
-
 select id_httpd,ip,datetime from httpd where ip = '10.110.70.182' ;
 
 select id_httpd,status_code,datetime from httpd where status_code = '404' ;
-
-SELECT id_messages FROM httpd WHERE id_messages in (
-	SELECT id_messages FROM messages
-	WHERE datetime > '2017-04-27 13:00:00'
-	AND datetime < '2017-04-27 13:05:00'
-)ORDER BY id_messages;
 
 
 SELECT dateOf(id_messages) FROM messages
