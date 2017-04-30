@@ -22,11 +22,16 @@ a Cassandra
 ### 5 Correr el contenedor [cassandra](https://hub.docker.com/_/cassandra/)
 ```docker run --name cassandra1 -d  -p 9042:9042 cassandra```
 
-### 6 Correr Flume
+### 6 Crear la base de datos
+```bash
+docker run -it --link cassandra1:cassandra --rm cassandra sh -c 'exec cqlsh "$CASSANDRA_PORT_9042_TCP_ADDR"'
+source '<path-repositorie>/cassandraScheme.sql'
+```
+### 7 Correr Flume
 ```bash
 cd <flume-path>
-export LOG_DIR=<path-repositorie>/logs
-sudo bin/flume-ng agent --name source_agent --conf ./conf/ --conf-file $LOG_DIR/flume-log-kafka.conf -Dflume.root.logger=DEBUG,console
+export LOG_DIR=<path-repositorie>
+sudo bin/flume-ng agent --name source_agent --conf ./conf/ --conf-file $LOG_DIR/flume-multilog-kafka.conf -Dflume.root.logger=DEBUG,console
 ```
-### 6 Ejecutar el [consumerLogs.py](https://github.com/OswaldoCuzSimon/logs/blob/master/consumerLogs.py)
+### 8 Ejecutar el [consumerLogs.py](https://github.com/OswaldoCuzSimon/logs/blob/master/consumerLogs.py)
 ```python consumerLogs.py```
