@@ -2,7 +2,7 @@ from kafka import KafkaConsumer
 from sendCassandra import SaveLogs
 import re
 
-class TweetConsumer:
+class LogsConsumer:
 	def __init__(self,urlKafka,topic,urlCass):
 		self.urlKafka = urlKafka
 		self.topic = topic
@@ -22,5 +22,5 @@ class TweetConsumer:
 urlKafka = "localhost:9092"
 topic = "syslogs3"
 urlCass = "localhost"
-consumer = TweetConsumer(urlKafka,topic,urlCass)
+consumer = LogsConsumer(urlKafka,topic,urlCass)
 consumer.receiveMessage()
